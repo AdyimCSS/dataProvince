@@ -1,0 +1,121 @@
+.sbHolder {}
+.sbHolder,  .sbHolder * {line-height:30px; font-size:12px;}
+.sbHolder {
+	height:30px;
+	background-color: #fff;
+	border: solid 1px #ccc;
+	color:#fff;
+	
+	width:auto;
+	outline:none;
+}
+.sbHolder.sbHolderDisabled {
+	background-color: #fff;
+}
+.sbToggle {
+	height:30px;
+	width:18px;
+}
+.sbHolderDisabled .sbToggle {background: url(img/select-icons2.png) 0 -167px no-repeat !important;}
+.sbSelector {height:30px; width:auto;}
+.sbSelector:link, .sbSelector:visited, .sbSelector:hover {color:#666;}
+.sbOptions {
+	background-color: #fff;
+	border: solid 1px #ccc;
+	
+	width:100%;
+}
+.sbOptions > li > a, 
+.sbOptions > li > span.sbGroup, 
+.sbOptions > li > span.sbDisabled {padding:1px 0 1px 3px; border-bottom: dotted 1px #ECECEC;}
+.sbOptions > li:last-child > a {border-bottom:none !important;}
+.sbOptions > li > span.sbSub {padding-left:17px;}
+.sbOptions a:link, .sbOptions a:visited {color:#666;}
+.sbOptions a:hover {color:#666;}
+.sbOptions .sbGroup {color:#666;}
+.sbToggle{
+	background: url(img/select-icons2.png) 0 0px no-repeat;
+}
+.sbToggle:hover{
+	background: url(img/select-icons2.png) 0 -30px no-repeat;
+}
+.sbToggleOpen{
+	background: url(img/select-icons2.png) 0 -60px no-repeat;
+}
+.sbToggleOpen:hover{
+	background: url(img/select-icons2.png) 0 -90px no-repeat;
+}
+
+/* theme boxSelectAlbum 
+================================== */
+.boxSelectAlbum .sbHolder {
+	-webkit-box-shadow: #666 2px 2px 5px;
+	-moz-box-shadow: #666 2px 2px 5px;
+	box-shadow: #666 2px 2px 5px;
+}
+.boxSelectAlbum .sbHolder,  .boxSelectAlbum .sbHolder * {line-height:28px; font-size:12px;}
+.boxSelectAlbum .sbHolder {
+	height:28px;
+	background-color: #F06EAA;
+	border: solid 1px #F06EAA;
+	color:#fff;
+	
+	width:auto;
+	outline:none;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
+	position:relative;
+	behavior: url(css/PIE.htc);
+}
+
+.boxSelectAlbum .sbHolder.sbHolderDisabled {
+	background-color: #F06EAA;
+}
+
+.boxSelectAlbum .sbToggle {
+	height:28px;
+	width:28px;
+}
+.boxSelectAlbum .sbHolderDisabled .sbToggle {background: url(img/select-icons.png) 0 -167px no-repeat !important;}
+.boxSelectAlbum .sbSelector {height:28px; width:auto;}
+.boxSelectAlbum .sbSelector:link, .boxSelectAlbum .sbSelector:visited, .boxSelectAlbum .sbSelector:hover {color:#fff;}
+.boxSelectAlbum .sbOptions {
+	background-color: #F06EAA;
+	border: none;
+	
+	width:100%;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;;
+	
+	position:relative;
+	behavior: url(css/PIE.htc);
+}
+.boxSelectAlbum .sbOptions > li > a, 
+.boxSelectAlbum .sbOptions > li > span.sbGroup, 
+.boxSelectAlbum .sbOptions > li > span.sbDisabled {padding:1px 0 1px 3px; border-bottom: dotted 1px #ECECEC;}
+.boxSelectAlbum .sbOptions > li:last-child > a {border-bottom:none !important;}
+.boxSelectAlbum .sbOptions > li > span.sbSub {padding-left:17px;}
+.boxSelectAlbum .sbOptions a:link, .boxSelectAlbum .sbOptions a:visited {color:#fff;}
+.boxSelectAlbum .sbOptions a:hover {color:#fff;}
+.boxSelectAlbum .sbOptions .sbGroup {color:#fff;}
+.boxSelectAlbum .sbToggle{
+	background: url(img/select-icons.png) 0 0px no-repeat;
+}
+.boxSelectAlbum .sbToggle:hover{
+	background: url(img/select-icons.png) 0 -28px no-repeat;
+}
+.boxSelectAlbum .sbToggleOpen{
+	background: url(img/select-icons.png) 0 -56px no-repeat;
+}
+.boxSelectAlbum .sbToggleOpen:hover{
+	background: url(img/select-icons.png) 0 -84px no-repeat;
+}
+
+
+
+
