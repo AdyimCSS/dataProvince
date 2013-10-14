@@ -329,6 +329,229 @@ function addEventSelectBoxProvince(_obj){
 				$(obj.formSelector+" "+obj.districtSelector+" select").selectbox();
 				$(obj.formSelector+" "+obj.subdistrictSelector+" select").selectbox();
 			}
+		}
+	});
+}
+
+function addEventSelectBoxJscrollPaneProvince(_obj){
+	var countP = 0;
+	
+	// getData is value = id, name
+	var obj = {
+		formSelector 			: "#formDataProvince", 
+		provinceSelector 	: "#province", 
+		districtSelector 		: "#district", 
+		subdistrictSelector 	: "#subdistrict", 
+		zipcodeSelector 		: "#zipcode",
+		getData 				: "id",  
+		provinceSelect 		: 0, 
+		keyProvince 			: 0, 
+		districtSelect 			: 0, 
+		keyDistrict				: 0, 
+		subdistrictSelect		: 0, 
+		keySubdistrict			: 0, 
+		splitArr 					: new Array()
+	};
+	
+	// get Data Default
+	if(_obj) $.extend(obj, _obj);
+	obj.districtDefault = $(obj.formSelector+" "+obj.districtSelector).html();
+	obj.subdistrictDefault = $(obj.formSelector+" "+obj.subdistrictSelector).html();
+	
+	// add data province
+	for(countP = 0; countP < dataProvince.PROVINCE.length; countP++){
+		$(obj.formSelector+" "+obj.provinceSelector+" select").append('<option value="'+countP+','+dataProvince.PROVINCE[countP].PROVINCE_ID+'">'+dataProvince.PROVINCE[countP].PROVINCE_NAME+'</option>');
+	}
+	
+	// add plugin selectbox
+	$(obj.formSelector+" "+obj.districtSelector+" select").selectbox({effect: "fade"});
+	$(obj.formSelector+" "+obj.subdistrictSelector+" select").selectbox({effect: "fade"});
+	
+	// add Event change
+	$(obj.formSelector+" "+obj.provinceSelector+" select").selectbox({
+		onChange : function(value, objSel){
+			// clear data
+			$(obj.formSelector+" "+obj.districtSelector).html(obj.districtDefault);
+			$(obj.formSelector+" "+obj.subdistrictSelector).html(obj.subdistrictDefault);
+			$(obj.formSelector+" "+obj.zipcodeSelector).val("");
+			
+			// if has value
+			if(value != ""){
+				obj.splitArr = value.split(",");
+				obj.keyProvince = parseInt(obj.splitArr[0]);
+				obj.provinceSelect = parseInt(obj.splitArr[1]);
+				
+				if(obj.getData == "id"){
+					// get id
+					$(obj.formSelector+" "+obj.provinceSelector+" input").val(obj.provinceSelect);
+				}else {
+					$(obj.formSelector+" "+obj.provinceSelector+" input").val(dataProvince.PROVINCE[obj.keyProvince].PROVINCE_NAME);
+				}
+				
+				// add data district
+				for(countP = 0; countP < dataProvince.PROVINCE[obj.keyProvince].DISTRICT.length; countP++){
+					$(obj.formSelector+" "+obj.districtSelector+" select").append('<option value="'+countP+','+dataProvince.PROVINCE[obj.keyProvince].DISTRICT[countP].DISTRICT_ID+'">'+dataProvince.PROVINCE[obj.keyProvince].DISTRICT[countP].DISTRICT_NAME+'</option>');
+				}
+				
+				// add plugin selectbox
+				$(obj.formSelector+" "+obj.subdistrictSelector+" select").selectbox();
+				
+				// add event change
+				$(obj.formSelector+" "+obj.districtSelector+" select").selectbox({
+					onChange : function(value, objSel){
+						// clear data
+						$(obj.formSelector+" "+obj.subdistrictSelector).html(obj.subdistrictDefault);
+						$(obj.formSelector+" "+obj.zipcodeSelector).val("");
+						
+						// if has value
+						if(value != ""){
+							obj.splitArr = value.split(",");
+							obj.keyDistrict = parseInt(obj.splitArr[0]);
+							obj.districtSelect = parseInt(obj.splitArr[1]);
+							
+							if(obj.getData == "id"){
+								// get id
+								$(obj.formSelector+" "+obj.districtSelector+" input").val(obj.districtSelect);
+							}else {
+								$(obj.formSelector+" "+obj.districtSelector+" input").val(dataProvince.PROVINCE[obj.keyProvince].DISTRICT[obj.keyDistrict].DISTRICT_NAME);
+							}
+							
+							
+							if(dataProvince.PROVINCE[obj.keyProvince].DISTRICT[obj.keyDistrict].SUBDISTRICT != undefined){
+								// add data subdistrict
+								for(countP = 0; countP < dataProvince.PROVINCE[obj.keyProvince].DISTRICT[obj.keyDistrict].SUBDISTRICT.length; countP++){
+									$(obj.formSelector+" "+obj.subdistrictSelector+" select").append('<option value="'+countP+','+dataProvince.PROVINCE[obj.keyProvince].DISTRICT[obj.keyDistrict].SUBDISTRICT[countP].SUBDISTRICT_ID+'">'+dataProvince.PROVINCE[obj.keyProvince].DISTRICT[obj.keyDistrict].SUBDISTRICT[countP].SUBDISTRICT_NAME+'</option>');
+								}
+																
+								// add event change
+								$(obj.formSelector+" "+obj.subdistrictSelector+" select").selectbox({
+									onChange : function(value, objSel){
+										$(obj.formSelector+" "+obj.zipcodeSelector).val("");
+										
+										if(value != ""){
+											obj.splitArr = value.split(",");
+											obj.keySubdistrict = parseInt(obj.splitArr[0]);
+											obj.subdistrictSelect = parseInt(obj.splitArr[1]);
+											
+											if(obj.getData == "id"){
+												// get id
+												$(obj.formSelector+" "+obj.subdistrictSelector+" input").val(obj.subdistrictSelect);
+											}else {
+												$(obj.formSelector+" "+obj.subdistrictSelector+" input").val(dataProvince.PROVINCE[obj.keyProvince].DISTRICT[obj.keyDistrict].SUBDISTRICT[obj.keySubdistrict].SUBDISTRICT_NAME);
+											}
+			
+											$(obj.formSelector+" "+obj.zipcodeSelector).val(dataProvince.PROVINCE[obj.keyProvince].DISTRICT[obj.keyDistrict].SUBDISTRICT[obj.keySubdistrict].POSTCODE);
+										}else {
+											$(obj.formSelector+" "+obj.zipcodeSelector).val("");
+											subdistrictSelect = 0;
+											
+											if(obj.getData == "id"){
+												// get id
+												$(obj.formSelector+" "+obj.subdistrictSelector+" input").val(obj.subdistrictSelect);
+											}else {
+												$(obj.formSelector+" "+obj.subdistrictSelector+" input").val("");
+											}
+										}	
+									}, 
+									onCreate : function(_mc){
+										// after create selectbox set jscrollpane
+										_mc.find('.sbOptions').jScrollPane({autoReinitialise: true});
+									}, 
+									effect: "fade", 
+									onOpen : function(_obj){
+										var mc = $('#sbOptions_'+_obj.uid);
+										var jsp = $('#sbOptions_'+_obj.uid).find('.jspContainer');
+										var jspPane = $('#sbOptions_'+_obj.uid).find('.jspPane');
+										
+										if(parseInt(jspPane).height < parseInt(mc.css('max-height'))){
+											mc.css('min-height', mc.css('max-height'));
+										}else {
+											mc.css('max-height', parseInt(jspPane).height+'px');
+										}
+									}	
+								});
+							}else {
+								$(obj.formSelector+" "+obj.subdistrictSelector+" select").html('<option value="">-</option>');
+								subdistrictSelect = 0;
+								
+								if(obj.getData == "id"){
+									// get id
+									$(obj.formSelector+" "+obj.subdistrictSelector+" input").val(obj.subdistrictSelect);
+								}else {
+									$(obj.formSelector+" "+obj.subdistrictSelector+" input").val("");
+								}
+							}
+							
+						}else {
+							obj.districtSelect = 0;	
+							obj.subdistrictSelect = 0;
+							
+							if(obj.getData == "id"){
+								// get id
+								$(obj.formSelector+" "+obj.districtSelector+" input").val(obj.districtSelect);
+								$(obj.formSelector+" "+obj.subdistrictSelector+" input").val(obj.subdistrictSelect);
+							}else {
+								$(obj.formSelector+" "+obj.districtSelector+" input").val("");
+								$(obj.formSelector+" "+obj.subdistrictSelector+" input").val("");
+							}
+							
+							// add plugin selectbox
+							$(obj.formSelector+" "+obj.subdistrictSelector+" select").selectbox();
+						}
+					}, 
+					onCreate : function(_mc){
+						// after create selectbox set jscrollpane
+						_mc.find('.sbOptions').jScrollPane({autoReinitialise: true});
+					}, 
+					effect: "fade", 
+					onOpen : function(_obj){
+						var mc = $('#sbOptions_'+_obj.uid);
+						var jsp = $('#sbOptions_'+_obj.uid).find('.jspContainer');
+						var jspPane = $('#sbOptions_'+_obj.uid).find('.jspPane');
+						
+						if(parseInt(jspPane).height < parseInt(mc.css('max-height'))){
+							mc.css('min-height', mc.css('max-height'));
+						}else {
+							mc.css('max-height', parseInt(jspPane).height+'px');
+						}
+					}		
+				});
+			}else {
+				obj.provinceSelect = 0;
+				obj.districtSelect = 0;	
+				obj.subdistrictSelect = 0;
+				
+				if(obj.getData == "id"){
+					// get id
+					$(obj.formSelector+" "+obj.provinceSelector+" input").val(obj.provinceSelect);
+					$(obj.formSelector+" "+obj.districtSelector+" input").val(obj.districtSelect);
+					$(obj.formSelector+" "+obj.subdistrictSelector+" input").val(obj.subdistrictSelect);
+				}else {
+					$(obj.formSelector+" "+obj.provinceSelector+" input").val("");
+					$(obj.formSelector+" "+obj.districtSelector+" input").val("");
+					$(obj.formSelector+" "+obj.subdistrictSelector+" input").val("");
+				}
+				
+				// add plugin selectbox
+				$(obj.formSelector+" "+obj.districtSelector+" select").selectbox();
+				$(obj.formSelector+" "+obj.subdistrictSelector+" select").selectbox();
+			}
+		}, 
+		onCreate : function(_mc){
+			// after create selectbox set jscrollpane
+			_mc.find('.sbOptions').jScrollPane({autoReinitialise: true});
+		}, 
+		effect: "fade", 
+		onOpen : function(_obj){
+			var mc = $('#sbOptions_'+_obj.uid);
+			var jsp = $('#sbOptions_'+_obj.uid).find('.jspContainer');
+			var jspPane = $('#sbOptions_'+_obj.uid).find('.jspPane');
+			
+			if(parseInt(jspPane).height < parseInt(mc.css('max-height'))){
+				mc.css('min-height', mc.css('max-height'));
+			}else {
+				mc.css('max-height', parseInt(jspPane).height+'px');
+			}
 		}	
 	});
 }

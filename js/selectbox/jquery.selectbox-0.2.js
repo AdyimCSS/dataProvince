@@ -33,7 +33,8 @@
 			effect: "slide", // "slide" or "fade"
 			onChange: null, //Define a callback function when the selectbox is changed
 			onOpen: null, //Define a callback function when the selectbox is open
-			onClose: null //Define a callback function when the selectbox is closed
+			onClose: null,  //Define a callback function when the selectbox is closed
+			onCreate : null
 		};
 	}
 	
@@ -307,6 +308,10 @@
 			$([".", inst.settings.classHolder, ", .", inst.settings.classSelector].join("")).mousedown(function(e) {    
 				e.stopPropagation();
 			});
+			
+			// set onCreate
+			var onCreate = this._get(inst, 'onCreate');
+			if (onCreate) {onCreate(sbHolder);} 
 		},
 		/**
 		 * Remove the selectbox functionality completely. This will return the element back to its pre-init state.

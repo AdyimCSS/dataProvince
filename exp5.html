@@ -11,19 +11,23 @@
 <link href="js/selectbox/theme1/style.css" rel="stylesheet" type="text/css" />
 <script src="js/selectbox/jquery.selectbox-0.2.js" type="text/javascript"></script>
 
+<link href="js/jScrollPane/jquery.jscrollpane.css" rel="stylesheet" type="text/css" />
+<script src="js/jScrollPane/jquery.jscrollpane.min.js" type="text/javascript"></script>
+
 <script src="js/adyim/dataProvince.js" type="text/javascript"></script>
 <script>
 	$("document").ready(function(e) {
-        addEventSelectBoxProvince({
-			formSelector : "#formExp3", 
+        addEventSelectBoxJscrollPaneProvince({
+			formSelector : "#formExp5", 
 			provinceSelector : "#province", 
 			districtSelector : "#district", 
 			subdistrictSelector : "#subdistrict", 
 			zipcodeSelector : "#zipcode", 
-			getData : "id"
+			getData : "name", 
+			jScrollPane : true
 		});
 		
-		$("#formExp3").submit(function(e){
+		$("#formExp4").submit(function(e){
 			e.preventDefault();
 			alert($(this).serialize());
 			return false;
@@ -32,9 +36,9 @@
 </script>
 </head>
 <body>
-	<h3>example 3 normal data province get id</h3>
+	<h3>example 5 selectbox and jscrollpane and data province get name</h3>
     
-    <form id="formExp3" name="formExp3">
+    <form id="formExp5" name="formExp5">
         <div id="province" style="width:300px; margin-bottom:10px;">
             <select>
                 <option value="">กรุณาเลือก จังหวัด</option>
